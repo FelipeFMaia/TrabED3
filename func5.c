@@ -171,15 +171,15 @@ void func5 () {
     lerCabecalhoPessoa(fpPessoa, &headerPessoa);
 
     // Verificando a consistência dos arquivos
-    // int consistencia;
-    // consistencia = verificaConsistenciaArquivo(fpIndice, 1);
-    // if(consistencia == 0) {
-    //     return;
-    // }
-    // consistencia = verificaConsistenciaArquivo(fpPessoa, 2);
-    // if(consistencia == 0) {
-    //     return;
-    // }
+    int consistencia = 1;
+    consistencia = verificaConsistenciaArquivo(fpIndice, 1);
+     if(consistencia == 0) {
+         return;
+     }
+     consistencia = verificaConsistenciaArquivo(fpPessoa, 2);
+     if(consistencia == 0) {
+        return;
+    }
 
     // modificar a consistência dos arquivos, pois estão abertos para escrita
     // inconsistente

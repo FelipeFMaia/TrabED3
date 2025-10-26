@@ -142,6 +142,7 @@ int verificaConsistenciaArquivo(FILE *arquivo, int arqID) {
 	// arqID == 1 indica que é para o arquivo de índice
 	if (arqID == 1) {
 		CabecalhoIndice headerIndice;
+        fseek(arquivo, 0, SEEK_SET);
 		lerCabecalhoIndice(arquivo, &headerIndice);
 		if (headerIndice.status == '0') {
 			printf("Falha no processamento do arquivo.\n");
@@ -156,6 +157,7 @@ int verificaConsistenciaArquivo(FILE *arquivo, int arqID) {
 	// arqID == 2 indica que é para o arquivo de Pessoas
 	else if (arqID == 2) {
 		CabecalhoPessoa headerPessoa;
+        fseek(arquivo, 0, SEEK_SET);
 		lerCabecalhoPessoa(arquivo, &headerPessoa);
 		if (headerPessoa.status == '0') {
 			printf("Falha no processamento do arquivo.\n");
@@ -170,6 +172,7 @@ int verificaConsistenciaArquivo(FILE *arquivo, int arqID) {
 	// arqID == 3 indica que é para o arquivo Segue
 	else if (arqID == 3) {
 		CabecalhoSegue headerSegue;
+        fseek(arquivo, 0, SEEK_SET);
 		lerCabecalhoSegue(arquivo, &headerSegue);
 		if (headerSegue.status == '0') {
 			printf("Falha no processamento do arquivo.\n");

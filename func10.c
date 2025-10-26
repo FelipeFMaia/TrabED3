@@ -69,7 +69,7 @@ void imprimeSegue(RegistroSegue segue) {
     }
 
     // Data Início
-    printf("Comecou a seguir em: ");
+    printf("Começou a seguir em: ");
     if (segue.dataInicioQueSegue[0] == '$') {
         printf("-\n");
     } else {
@@ -141,15 +141,15 @@ void func10() {
     lerCabecalhoSegue(fpSegue, &headerSegue);
 
     // Verificando a consistência dos três arquivos
-    // if (verificaConsistenciaArquivo(fpPessoa, 2) == 0) {
-    //     return;
-    // }
-    // if (verificaConsistenciaArquivo(fpIndice, 1) == 0) {
-    //     return;
-    // }
-    //  if (verificaConsistenciaArquivo(fpSegue, 3) == 0) {
-    //     return;
-    // }
+     if (verificaConsistenciaArquivo(fpPessoa, 2) == 0) {
+         return;
+     }
+     if (verificaConsistenciaArquivo(fpIndice, 1) == 0) {
+         return;
+     }
+      if (verificaConsistenciaArquivo(fpSegue, 3) == 0) {
+         return;
+    }
 
     // --- ALOCAÇÃO DO VETOR DE OFFSETS ---
     // (Igual fizemos na func4, para guardar os resultados da buscaPessoas)
@@ -221,6 +221,7 @@ void func10() {
                     } else {
                         // O ID mudou, significa que já lemos todos
                         // os registros 'segue' dessa pessoa.
+                        printf("\n"); //seguir a padronização do run codes
                         break; 
                     }
                 }
@@ -236,4 +237,5 @@ void func10() {
     fclose(fpPessoa);
     fclose(fpIndice);
     fclose(fpSegue);
+    
 }

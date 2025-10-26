@@ -161,6 +161,7 @@ void func2() {
         fclose(fpPessoa);
         fclose(fpCsv);
 
+
         binarioNaTela(nome_arqPessoa);
         binarioNaTela(nome_arqIndice);
 

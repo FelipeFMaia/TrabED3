@@ -90,11 +90,11 @@ void func9() {
     }
     // Verificar consistência do arquivo desordenado
     int consistencia = 1;
-    // int consistencia = verificaConsistenciaArquivo(fpDesordenado, 3);
-    // if (consistencia == 0) { // se o arquivo estiver inconsistente
-    //     fclose(fpDesordenado);
-    //     return; // abortar funcionalidade
-    // }
+    consistencia = verificaConsistenciaArquivo(fpDesordenado, 3);
+     if (consistencia == 0) { // se o arquivo estiver inconsistente
+         fclose(fpDesordenado);
+         return; // abortar funcionalidade
+     }
 
     // Criar o arquivo ordenado
     FILE *fpOrdenado;

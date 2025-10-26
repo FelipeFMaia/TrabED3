@@ -25,9 +25,9 @@ void func3() {
     lerCabecalhoPessoa(fpPessoa, &headerPessoa);
 
     // Verificação da consistência do arquivo (status)
-    // if (verificaConsistenciaArquivo(fpPessoa, 2) == 0) {
-    //     return;
-    // }
+     if (verificaConsistenciaArquivo(fpPessoa, 2) == 0) {
+         return;
+    }
 
     // Caso não existam registros no arquivo
     if (headerPessoa.qtdPessoas == 0) {
