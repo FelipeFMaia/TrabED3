@@ -25,8 +25,10 @@ void func3() {
     lerCabecalhoPessoa(fpPessoa, &headerPessoa);
 
     // Verificação da consistência do arquivo (status)
-     if (verificaConsistenciaArquivo(fpPessoa, 2) == 0) {
-         return;
+    if (headerPessoa.status == '0') {
+        printf("Falha no processamento do arquivo.\n");
+        fclose(fpPessoa);
+        return;
     }
 
     // Caso não existam registros no arquivo
@@ -35,7 +37,7 @@ void func3() {
         fclose(fpPessoa);
         return;
     }
-
+    
     // Loop para percorrer os registros de dados
     while (ftell(fpPessoa) < headerPessoa.proxByteOffSet) {
         RegistroPessoa pessoa;

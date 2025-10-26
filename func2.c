@@ -13,24 +13,28 @@ void func2() {
 
     RegistroPessoa RAM[1000];             //memoria em ram para a leitura do CSV
     RegistroIndice vetorIndice[1000];     //memoria em ram para a leitura do indice
-
+    
     scanf(" %s",nome_arqCSV); //nome do arquivo csv
-    scanf(" %s",nome_arqPessoa); //nome do arquivo pessoa
-    scanf(" %s",nome_arqIndice); //nome do arquivo indice primario
-
-
-    FILE *fpIndice = fopen(nome_arqIndice, "rb+");        //cria arquivo com o nome_arq
-
-        verificaArquivo (fpIndice);
-
-    FILE *fpPessoa = fopen(nome_arqPessoa, "wb");        //cria arquivo com o nome_arq
-
-        verificaArquivo (fpPessoa);
-
     FILE *fpCsv= fopen(nome_arqCSV, "r");        //cria arquivo com o nome_arq
-
-        verificaArquivo (fpCsv);
-
+    if (verificaArquivo(fpCsv) == 0) {
+        return; // Para a execução da func2
+    }
+    
+    scanf(" %s",nome_arqPessoa); //nome do arquivo pessoa
+    FILE *fpPessoa = fopen(nome_arqPessoa, "wb");        //cria arquivo com o nome_arq
+    if (verificaArquivo(fpPessoa) == 0) {
+        fclose(fpCsv);
+        return; // Para a execução da func2
+    }
+    
+    scanf(" %s",nome_arqIndice); //nome do arquivo indice primario
+    FILE *fpIndice = fopen(nome_arqIndice, "rb+");        //cria arquivo com o nome_arq
+    if (verificaArquivo(fpIndice) == 0) {
+        fclose(fpCsv);
+        fclose(fpPessoa);
+        return; // Para a execução da func2
+    }
+    
         CabecalhoIndice cabecalhoIndice;
         CabecalhoPessoa cabecalhoPessoa;
         cabecalhoPessoa.status = '0'; //inconsistente
@@ -40,15 +44,7 @@ void func2() {
 
         escreveCabecalhoPessoa(fpPessoa, cabecalhoPessoa);
 
-        /*fseek(arqPessoa,0, SEEK_SET); //move ponteiro pra primeira posicao do arqPessoa que no caso e o status do cabecalho
-        fwrite(&cabecalhoPessoa.status, sizeof(char),1,arqPessoa);  //salva o status como inconsistente
-        fwrite(&cabecalhoPessoa.qtdPessoas,sizeof(int),1,arqPessoa);
-        fwrite(&cabecalhoPessoa.qtdRemovidos,sizeof(int),1,arqPessoa);
-        fwrite(&cabecalhoPessoa.proxByteOffSet,sizeof(long long),1,arqPessoa);
-        // o "fseek" estara no byte 17, onde queremos ler*/
-
         atualizarConsistencia(fpIndice, '0');     //torna o status do indice com inscosistente
-        
         
         fseek(fpIndice, 0, SEEK_END);     //move o ponteiro pro fim do arquivo
         int tamanhoIndice = ftell(fpIndice);            //nos conta o tamnho do arquivo devolvendo a posicao do ponteiro manipiulado pelo fseek
@@ -64,8 +60,6 @@ void func2() {
             fread(vetorIndice, sizeof(RegistroIndice), numeroIndice, fpIndice);    //le o arquivo de indice ja existente e salva num vetor
         }
     
-        
-        
         fgets(buffer, 100, fpCsv);   //le a primeira linha do csv que nao sera copiada (cabecalho)
 
         char *tok;
@@ -103,7 +97,6 @@ void func2() {
             i++;            //proximo indice da RAM
             contReg++;      //conta o numero de registros do csv que serao passados ao arquivo pessoa
         }
-
 
         int tamNomePessoa, tamNomeUsuario, tamRegistro;
         int j = numeroIndice;
@@ -160,7 +153,6 @@ void func2() {
         fclose(fpIndice);
         fclose(fpPessoa);
         fclose(fpCsv);
-
 
         binarioNaTela(nome_arqPessoa);
         binarioNaTela(nome_arqIndice);
