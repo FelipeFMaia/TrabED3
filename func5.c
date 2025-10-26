@@ -245,8 +245,7 @@ void func5 () {
     } 
 
     // Atualizar o arquivo de índice (sem os removidos)
-    // CAPTURE O PONTEIRO RETORNADO AQUI:
-    fpIndice = reescreverIndiceComRemocoes(fpIndice, nameFileIndice, headerIndice, idsParaRemoverDoIndice, totalRemovidosDoIndice);
+    reescreverIndiceComRemocoes(fpIndice, nameFileIndice, headerIndice, idsParaRemoverDoIndice, totalRemovidosDoIndice);
 
     // Adicionar verificação de segurança
     if (fpIndice == NULL) {

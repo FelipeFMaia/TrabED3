@@ -770,10 +770,10 @@ int compararIndicesPeloId(const void *a, const void *b) {
 }
 
 // Função auxiliar para a func5, para atualizar o arquivo de índice após remoção
-FILE* reescreverIndiceComRemocoes(FILE *fpIndice, char *nomeArquivoIndice, CabecalhoIndice headerIndice, int *idsParaRemover, int numRemovidos) {
+void reescreverIndiceComRemocoes(FILE *fpIndice, char *nomeArquivoIndice, CabecalhoIndice headerIndice, int *idsParaRemover, int numRemovidos) {
     // Se não houver remoções, não fazer nada
     if (numRemovidos == 0) {
-		return fpIndice; // Abortar
+		return; // Abortar
 	}
 
     // Descobrir o número de registros antigos
@@ -812,7 +812,7 @@ FILE* reescreverIndiceComRemocoes(FILE *fpIndice, char *nomeArquivoIndice, Cabec
         // Libera memória antes de sair em caso de erro
         free(vetorAntigo);
         free(vetorNovo);
-        return NULL; // Retorna NULL para indicar falha
+        return; // Retorna para indicar falha
     }
 
     // Atualizar consistência
@@ -834,10 +834,10 @@ FILE* reescreverIndiceComRemocoes(FILE *fpIndice, char *nomeArquivoIndice, Cabec
     fclose(fpIndice);
     fpIndice = fopen(nomeArquivoIndice, "r+b"); // Cria o ponteiro final
     if (verificaArquivo(fpIndice) == 0) {
-        return NULL; // Retorna NULL para indicar falha
+        return;// Retorna para indicar falha
     } 
 
-    return fpIndice; // <-- A MUDANÇA MAIS IMPORTANTE: retorne o novo ponteiro!
+    return;
 }
 
 

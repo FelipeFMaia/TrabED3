@@ -135,7 +135,7 @@ void atualizarIndiceComAdicoes(FILE *fpIndice, char *nomeArquivoIndice,
 
 
 // Função para reescrever o índice, removendo IDs específicos
-FILE* reescreverIndiceComRemocoes(FILE *fpIndice, char *nomeArquivoIndice, CabecalhoIndice headerIndice,
+void reescreverIndiceComRemocoes(FILE *fpIndice, char *nomeArquivoIndice, CabecalhoIndice headerIndice,
                                  int *idsParaRemover, int numRemovidos);
 
 // Função para reescrever o índice, removendo E adicionando IDs
