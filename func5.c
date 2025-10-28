@@ -82,10 +82,6 @@ void func5 () {
     int *idsParaRemoverDoIndice = (int*)malloc(maxRegistros * sizeof(int));
     int totalRemovidosDoIndice = 0;
 
-
-
-    // loop principal para as buscas
-
     // Este loop vai rodar 'n' vezes, uma para cada busca solicitada
     for(int i = 0; i < n; i++) {
         int temp; // Variável temporária
@@ -150,16 +146,11 @@ void func5 () {
     headerPessoa.status = '1';
     atualizarConsistencia(fpPessoa, headerPessoa.status);
 
-    // fim do programa
-    // Liberar memória
+   
     free(offsetsEncontrados);
     free(idsParaRemoverDoIndice);
-
-    // Após todas as buscas, fechamos os arquivos
     fclose(fpIndice);
     fclose(fpPessoa);
-
-    // usar binarioNaTela
     binarioNaTela(nameFilePessoa);
     binarioNaTela(nameFileIndice);
 }
