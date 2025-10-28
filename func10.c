@@ -158,7 +158,6 @@ void func10() {
         return;
     }
 
-    // loop principal para as junções
     for(int i = 0; i < n; i++) {
         int temp; 
         scanf("%d", &temp); // Consumir do terminal o número da linha
@@ -226,8 +225,7 @@ void func10() {
     } // Fim do loop for (de n buscas)
 
 
-    // fim do programa
-    free(offsetsEncontrados); // Libera o vetor de offsets
+    free(offsetsEncontrados);
     fclose(fpPessoa);
     fclose(fpIndice);
     fclose(fpSegue);
