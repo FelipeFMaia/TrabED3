@@ -20,7 +20,7 @@ removido logicamente que caiba e não achar nenhum, inserir no final.
     Fazer isso para todas as atualizações requisitadas no terminal 
 
     Como fizemos:
-    Optamos por pegar todas as atualizacoes e armazenar em um
+    Optamos por pegar todas as atualizacoes e armazenar em vetores, para só depois atualizar os arquivos.
  */
 void func7 () {
     int numAtualizacoes; // Número de atualizacoes que serão realizadas
