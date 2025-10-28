@@ -160,11 +160,8 @@ void func9() {
 
     // Atualizar a consistência e fechar o arquivo Ordenado
     atualizarConsistencia(fpOrdenado, '1');
+    
     fclose(fpOrdenado);
-
-    // Liberar memória alocada
     free(registros);
-
-    // binario na tela do arquivo ordenado
     binarioNaTela(nameFileOrdenado);
 }
