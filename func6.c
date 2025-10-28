@@ -16,7 +16,7 @@ void lerNovoRegistro (RegistroPessoa *novoRegistro) {
     // Lê idPessoa
     scanf("%d,", &novoRegistro->idPessoa);
 
-    // Lê nomePessoa (pode ser NULO ("") ou "string")
+    // Lê nomePessoa
     scan_quote_string(buffer);
     if (strlen(buffer) == 0) {
         novoRegistro->tamanhoNomePessoa = 0;
@@ -25,7 +25,7 @@ void lerNovoRegistro (RegistroPessoa *novoRegistro) {
         strcpy(novoRegistro->nomePessoa, buffer);
     }
 
-    // Lê idadePessoa (pode ser NULO ou int)
+    // Lê idadePessoa 
     scanf(", %[^,]", buffer); // Lê como string
     if (strcmp(buffer, "NULO") == 0) {
         novoRegistro->idadePessoa = -1;
@@ -33,7 +33,7 @@ void lerNovoRegistro (RegistroPessoa *novoRegistro) {
         novoRegistro->idadePessoa = atoi(buffer);
     }
 
-    // Lê nomeUsuario (pode ser NULO ("") ou "string")
+    // Lê nomeUsuario
     scanf(", "); // Consome a vírgula e o espaço
     scan_quote_string(buffer);
     if (strlen(buffer) == 0) {
@@ -44,8 +44,6 @@ void lerNovoRegistro (RegistroPessoa *novoRegistro) {
     }
 }
 
-
-
 /**
  * Funcionalidade 6: Inserção de registros no arquivo de dados (pessoa.bin)
     * Encontra o primeiro registro removido que caiba o novo registro e aplica a a inserção,
@@ -54,7 +52,6 @@ preenchendo o restante do registro com $.
     * 
  */
 void func6 () {
-    // --- PREPARAÇÃO E LEITURA INICIAL ---
     
     int numRegistrosNovos; // Número de novos registros a serem inseridos
     char nameFileIndice[MAX_STRING_TAMANHO], nameFilePessoa[MAX_STRING_TAMANHO];
@@ -66,8 +63,7 @@ void func6 () {
 
     FILE *fpIndice, *fpPessoa;
 
-    // Tenta abrir os dois arquivos em modo de leitura binária e escrita ("r+b")
-    // "r" é para leitura (read) e "b" é para binário (binary)
+    // Tenta abrir os dois arquivos em modo de leitura binária e escrita
     fpPessoa = fopen(nameFilePessoa, "r+b");
     fpIndice = fopen(nameFileIndice, "r+b");
 
@@ -80,14 +76,11 @@ void func6 () {
         return; // Aborta funcionalidade
     }
 
-
-    // --- LEITURA E VERIFICAÇÃO DOS CABEÇALHOS ---
-
     // Lendo o cabeçalho do arquivo de ÍNDICE
     CabecalhoIndice headerIndice;
     lerCabecalhoIndice(fpIndice, &headerIndice);
 
-    // Lendo o cabeçalho do arquivo de DADOS (Pessoas)
+    // Lendo o cabeçalho do arquivo pessoa
     CabecalhoPessoa headerPessoa;
     lerCabecalhoPessoa(fpPessoa, &headerPessoa);
 
@@ -114,7 +107,7 @@ void func6 () {
     RegistroIndice *novosRegistros = (RegistroIndice*)malloc(sizeof(RegistroIndice) * numRegistrosNovos);
 
 
-    // --- LOOP PRINCIPAL ---
+    // loop principal
 
     // Este loop vai rodar numeroRegistroNovo vezes, uma para cada registro a ser inserido
     for(int i = 0; i < numRegistrosNovos; i++) {
@@ -146,7 +139,7 @@ void func6 () {
     headerPessoa.status = '1';
     escreveCabecalhoPessoa(fpPessoa, headerPessoa);
 
-    // --- FINALIZAÇÃO ---
+    // fim do programa
     // liberar memória
     free(novosRegistros);
 

@@ -20,7 +20,6 @@
  */
 
 void func5 () {
-    // --- PREPARAÇÃO E LEITURA INICIAL ---
     
     int n; // Número de buscas que serão realizadas
     char nameFileIndice[MAX_STRING_TAMANHO], nameFilePessoa[MAX_STRING_TAMANHO];
@@ -32,7 +31,7 @@ void func5 () {
 
     FILE *fpIndice, *fpPessoa;
 
-    // Tenta abrir os dois arquivos em modo de leitura binária e escrita ("r+b")
+    // Tenta abrir os dois arquivos em modo de leitura binária e escrita
     fpPessoa = fopen(nameFilePessoa, "r+b");
     fpIndice = fopen(nameFileIndice, "r+b");
 
@@ -45,13 +44,12 @@ void func5 () {
         return; // Aborta funcionalidade
     }
 
-    // --- LEITURA E VERIFICAÇÃO DOS CABEÇALHOS ---
 
     // Lendo o cabeçalho do arquivo de ÍNDICE
     CabecalhoIndice headerIndice;
     lerCabecalhoIndice(fpIndice, &headerIndice);
 
-    // Lendo o cabeçalho do arquivo de DADOS (Pessoas)
+    // Lendo o cabeçalho do arquivo pessoa
     CabecalhoPessoa headerPessoa;
     lerCabecalhoPessoa(fpPessoa, &headerPessoa);
 
@@ -75,7 +73,7 @@ void func5 () {
     atualizarConsistencia(fpPessoa, headerPessoa.status);
 
 
-    // --- ALOCAÇÃO DE VETORES AUXILIARES ---
+    // alocando vetores auxiliares
     int maxRegistros = headerPessoa.qtdPessoas + headerPessoa.qtdRemovidos; // Tamanho seguro
     
     // Aloca vetor para guardar os offsets encontrados pela busca
@@ -86,7 +84,7 @@ void func5 () {
 
 
 
-    // --- LOOP PRINCIPAL DE BUSCAS ---
+    // loop principal para as buscas
 
     // Este loop vai rodar 'n' vezes, uma para cada busca solicitada
     for(int i = 0; i < n; i++) {
@@ -152,7 +150,7 @@ void func5 () {
     headerPessoa.status = '1';
     atualizarConsistencia(fpPessoa, headerPessoa.status);
 
-    // --- FINALIZAÇÃO ---
+    // fim do programa
     // Liberar memória
     free(offsetsEncontrados);
     free(idsParaRemoverDoIndice);

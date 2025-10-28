@@ -140,7 +140,8 @@ void func8() {
 
   // atualizar o cabecalho do binario
   escreverCabecalhoSegue(fpSegue, headerSegue);
-
+  
+  // fim do programa
   // fechar arquivos
   fclose(fpCSV);
   fclose(fpSegue);

@@ -23,8 +23,6 @@ removido logicamente que caiba e não achar nenhum, inserir no final.
     Optamos por pegar todas as atualizacoes e armazenar em um
  */
 void func7 () {
-    // --- PREPARAÇÃO E LEITURA INICIAL ---
-    
     int numAtualizacoes; // Número de atualizacoes que serão realizadas
     char nameFileIndice[MAX_STRING_TAMANHO], nameFilePessoa[MAX_STRING_TAMANHO];
     
@@ -161,7 +159,7 @@ void func7 () {
                 idsParaRemoverDoIndice[numRemovidos] = idAntigo;
                 numRemovidos++;
 
-                // Inserir o registro atualizado (usando a lógica First-Fit)
+                // Inserir o registro atualizado usando a lógica First-Fit
                 long long novoByteOffset = inserirPessoa(fpPessoa, pessoa, &headerPessoa);
                 
                 // Adicionar o novo registro para inserção no índice
@@ -188,7 +186,7 @@ void func7 () {
     headerPessoa.status = '1';
     atualizarConsistencia(fpPessoa, headerPessoa.status);
 
-    // --- FINALIZAÇÃO ---
+    // fim do programa
     // Liberar memória
     free(offsetsEncontrados);
     free(idsParaRemoverDoIndice);
