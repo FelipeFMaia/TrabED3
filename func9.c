@@ -12,61 +12,69 @@ Ordenar o arquivo
 
 
 
-// Função auxiliar para comparar inteiros (trata nulos)
+// Função auxiliar para comparar inteiros (trata nulos) --> usada na função de comparação
 int compareInts(int a, int b) {
-    int nuloA = (a == -1);
-    int nuloB = (b == -1);
+    // Trata os casos nulos primeiro
+    if (a == -1) {          // A é nulo
+        if (b == -1) 
+            return 0;       // A e B são nulos
+         else 
+            return 1;       // A é nulo e B não
+    }
 
-    if (nuloA && nuloB) return 0;  // Ambos nulos, são iguais
-    if (!nuloA && nuloB) return -1; // A (não nulo) vem ANTES de B (nulo)
-    if (nuloA && !nuloB) return 1;  // A (nulo) vem DEPOIS de B (não nulo)
+    if (b == -1)          // B é nulo e A não
+        return -1;          // se A nao é nulo, ele vem antes
     
-    // Ambos não são nulos, comparação padrão
-    return a - b;
+    //ambos valores não nulos --> subtração
+    return a - b;   // Retorna < 0 se a < b, 0 se a == b, > 0 se a > b
 }
 
-// Função auxiliar para comparar datas (trata nulos e formato)
+// Função auxiliar para comparar datas (trata nulos e formato) --> usada na função de comparação
 int compareDatas(const char *dataA, const char *dataB) {
-    int nuloA = (dataA[0] == '$');
-    int nuloB = (dataB[0] == '$');
+    // Trata os casos nulos (identificados por '$')
+    if (dataA[0] == '$') {  // data A é nula
+        
+        if (dataB[0] == '$') {
+            return 0;       // data B também é nula, são consideradas iguais
+        }else 
+            return 1;       // A é nulo, B não 
+    }
 
-    if (nuloA && nuloB) return 0;
-    if (!nuloA && nuloB) return -1; // A (não nulo) vem ANTES de B (nulo)
-    if (nuloA && !nuloB) return 1;  // A (nulo) vem DEPOIS de B (não nulo)
+    if (dataB[0] == '$')    // Data B é nula
+        return -1;          // A é menor
 
-    // Ambos não são nulos, comparar AAAA, depois MM, depois DD
+    // Ambos não são nulos --> comparar ano, depois mês, depois dia
     
-    // Comparar Ano (pos 6, 4 chars)
-    int cmpAno = strncmp(dataA + 6, dataB + 6, 4);
-    if (cmpAno != 0) return cmpAno;
+    int comparacaoAno = strncmp(dataA + 6, dataB + 6, 4);  // comparar ano --> pula 6 char para analisar o ano e compara os 4 chars de ano
+    if (comparacaoAno != 0) return comparacaoAno;
 
     // Comparar Mês (pos 3, 2 chars)
-    int cmpMes = strncmp(dataA + 3, dataB + 3, 2);
-    if (cmpMes != 0) return cmpMes;
+    int comparacaoMes = strncmp(dataA + 3, dataB + 3, 2);  //  comparar mes -->  pula 3 chars para analisar o mes e comparar os 2 chars de mes
+    if (comparacaoMes != 0) return comparacaoMes;
 
     // Comparar Dia (pos 0, 2 chars)
-    return strncmp(dataA, dataB, 2);
+    return strncmp(dataA, dataB, 2);                // comparar dia --> começa no inicio da string e analisa os 2 chars de dia
 }
 
 
 int funcaoDeComparacao(const void *a, const void *b) {
-    // Fazer o "cast" dos ponteiros genéricos
     RegistroSegue *regA = (RegistroSegue *)a;
     RegistroSegue *regB = (RegistroSegue *)b;
 
-    // Chamar os comparadores auxiliares na ordem de prioridade
+    // chamar os comparadores auxiliares na ordem de prioridade 
+    // comparacao pode ser -1, 0 e 1 --> -1 regA é menor, 0 são iguais, 1 regB é menor
     
     // Critério 1: idPessoaQueSegue
-    int cmp = compareInts(regA->idPessoaQueSegue, regB->idPessoaQueSegue);
-    if (cmp != 0) return cmp;
+    int comparacao = compareInts(regA->idPessoaQueSegue, regB->idPessoaQueSegue);
+    if (comparacao != 0) return comparacao;       //se der zero, segue pro próximo critério de comparação
 
     // Critério 2: idPessoaQueESeguida (desempate)
-    cmp = compareInts(regA->idPessoaQueESeguida, regB->idPessoaQueESeguida);
-    if (cmp != 0) return cmp;
+    comparacao = compareInts(regA->idPessoaQueESeguida, regB->idPessoaQueESeguida);
+    if (comparacao != 0) return comparacao;       //se der zero, segue pro próximo critério de comparação
 
     // Critério 3: dataInicioQueSegue (desempate)
-    cmp = compareDatas(regA->dataInicioQueSegue, regB->dataInicioQueSegue);
-    if (cmp != 0) return cmp;
+    comparacao = compareDatas(regA->dataInicioQueSegue, regB->dataInicioQueSegue);
+    if (comparacao != 0) return comparacao;       //se der zero, segue pro próximo critério de comparação
 
     // Critério 4: dataFimQueSegue (desempate final)
     return compareDatas(regA->dataFimQueSegue, regB->dataFimQueSegue);
