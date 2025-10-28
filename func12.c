@@ -13,6 +13,7 @@
 // dataInicio (10) [cite: 72] + dataFim (10) [cite: 73] + grauAmizade (1) [cite: 74]
 #define TAMANHO_REGISTRO_SEGUE 30 
 
+// FUNÇÃO PARA DEBUGGAR CODIGO E ACHAR ERROS --> NÃO É PARTE DO TRABALHO
 /**
  * Funcionalidade 12: Imprimir todo o conteúdo do arquivo segue.bin (Header e Dados).
  * * Esta função é uma ferramenta de depuração. Ela abre um arquivo segue.bin,

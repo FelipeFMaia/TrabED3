@@ -3,6 +3,8 @@
 #include "utilidades.h" // Para as structs e funções auxiliares
 #include "func.h"       // Para a declaração da func11
 
+
+// FUNÇÃO PARA DEBUGGAR CODIGO E ACHAR ERROS --> NÃO É PARTE DO TRABALHO
 /**
  * Funcionalidade 11: Imprimir todos os registros do arquivo de índice.
  * * Esta função é utilitária para depuração. Ela abre um arquivo de índice,
