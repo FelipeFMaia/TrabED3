@@ -4,13 +4,10 @@
 #include "utilidades.h"
 #include "func.h"
 
-
 /*
 Funcionalidade 9
 Ordenar o arquivo
 */
-
-
 
 // Função auxiliar para comparar inteiros (trata nulos) --> usada na função de comparação
 int compareInts(int a, int b) {
