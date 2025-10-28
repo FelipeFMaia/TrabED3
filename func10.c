@@ -11,7 +11,7 @@
  */
 int buscaBinariaPrimeiroSegue(FILE *fpSegue, int idBuscado, int numRegistros) {
     int inicio = 0, fim = numRegistros - 1, meio;
-    int rrnEncontrado = -1; // RRN (Record Relative Number)
+    int rrnEncontrado = -1; // RRN 
 
     if (numRegistros == 0) {
         return -1;
@@ -33,19 +33,19 @@ int buscaBinariaPrimeiroSegue(FILE *fpSegue, int idBuscado, int numRegistros) {
         } else if (regSegue.idPessoaQueSegue > idBuscado) {
             fim = meio - 1;
         } else {
-            // Achamos um! Mas pode não ser o primeiro.
+            // após achar, verifica se há um registro anterior com mesmo ID, pois pode não ser o primeiro
             rrnEncontrado = meio;
-            fim = meio - 1; // Tenta achar um registro anterior com o mesmo ID
+            fim = meio - 1; 
         }
     }
     
-    // Retorna o RRN (índice) do primeiro registro que encontrou
+    // Retorna o RRN do primeiro registro que encontrou
     return rrnEncontrado; 
 }
 
 
 /**
- * Imprime os dados de um registro 'segue' no formato da Funcionalidade 10.
+ * Imprime os dados de um registro segue no formato da Funcionalidade 10.
  */
 void imprimeSegue(RegistroSegue segue) {
     // ID da pessoa que é seguida
@@ -86,20 +86,19 @@ void imprimeSegue(RegistroSegue segue) {
         printf("%.10s\n", segue.dataFimQueSegue);
     }
     
-    printf("\n"); // Linha em branco entre cada registro 'segue'
+    printf("\n"); // Linha em branco entre cada registro segue
 }
 
 
 /**
- * Funcionalidade 10: Junção (JOIN) entre pessoa.bin e segueOrdenado.bin
- * 1.  Busca registros em 'pessoa.bin' usando a func4 (buscarPessoas).
- * 2.  Para cada pessoa encontrada, imprime seus dados.
- * 3.  Usa o 'idPessoa' para fazer uma busca binária em 'segueOrdenado.bin'.
- * 4.  Imprime todos os registros 'segue' correspondentes.
+ * Funcionalidade 10: junção entre pessoa.bin e segueOrdenado.bin
+ * 1.  Busca registros em 'pessoa.bin' usando a func4 (buscarPessoas)
+ * 2.  Para cada pessoa encontrada, imprime seus dados
+ * 3.  Usa o 'idPessoa' para fazer uma busca binária em segueOrdenado.bin
+ * 4.  Imprime todos os registros segue correspondentes
  */
 void func10() {
-    // --- PREPARAÇÃO E LEITURA INICIAL ---
-    int n; // Número de buscas (junções) que serão realizadas
+    int n;                                      // Número de buscas (junções) que serão realizadas
     char nameFilePessoa[MAX_STRING_TAMANHO];
     char nameFileIndice[MAX_STRING_TAMANHO];
     char nameFileSegue[MAX_STRING_TAMANHO];
@@ -125,8 +124,6 @@ void func10() {
         fclose(fpIndice);
         return;
     }
-
-    // --- LEITURA E VERIFICAÇÃO DOS CABEÇALHOS ---
     
     // Lendo cabeçalho do arquivo de Pessoas
     CabecalhoPessoa headerPessoa;
@@ -151,10 +148,9 @@ void func10() {
          return;
     }
 
-    // --- ALOCAÇÃO DO VETOR DE OFFSETS ---
-    // (Igual fizemos na func4, para guardar os resultados da buscaPessoas)
+    // alocando vetores para os offsets de forma análoga à func 4
     long long *offsetsEncontrados = (long long*)malloc(headerPessoa.qtdPessoas * sizeof(long long));
-    if (offsetsEncontrados == NULL && headerPessoa.qtdPessoas > 0) {
+    if (offsetsEncontrados == NULL && headerPessoa.qtdPessoas > 0) { //há quatindade de pessoas, mas o vetor não conseguiu ser alocado
         printf("Falha ao alocar memória para busca.\n");
         fclose(fpPessoa);
         fclose(fpIndice);
@@ -162,7 +158,7 @@ void func10() {
         return;
     }
 
-    // --- LOOP PRINCIPAL DE BUSCAS (JUNÇÕES) ---
+    // loop principal para as junções
     for(int i = 0; i < n; i++) {
         int temp; 
         scanf("%d", &temp); // Consumir do terminal o número da linha
@@ -174,16 +170,16 @@ void func10() {
         int numEncontradosPessoa;
         int encontrouAlgumaPessoa = 0; // Flag para a msg "Registro inexistente"
 
-        // 1. BUSCAR AS PESSOAS (usando a super-função)
+        // Busca registros em 'pessoa.bin' usando a função buscarPessoas
         numEncontradosPessoa = buscarPessoas(fpPessoa, fpIndice, &headerPessoa, 
                                              nomeCampo, valorCampo, offsetsEncontrados);
 
         if (numEncontradosPessoa == 0) {
             printf("Registro inexistente.\n");
-            continue; // Pula para a próxima busca 'n'
+            continue; // pula para a próxima busca
         }
 
-        // 2. ITERAR SOBRE AS PESSOAS ENCONTRADAS
+        // Para cada pessoa encontrada, imprime seus dados
         for (int j = 0; j < numEncontradosPessoa; j++) {
             
             // Posiciona e lê a pessoa
@@ -191,18 +187,17 @@ void func10() {
             RegistroPessoa pessoa;
             lerRegistroPessoa(fpPessoa, &pessoa);
 
-            // 3. IMPRIME OS DADOS DA PESSOA
-            imprimePessoa(pessoa); // (Formato da func3/4)
+            // imprime os dados da pessoa
+            imprimePessoa(pessoa);
 
             int idParaJuncao = pessoa.idPessoa;
 
-            // 4. BUSCA BINÁRIA NO ARQUIVO SEGUE
+            // busca binária no arquivo segue
             int rrnInicial = buscaBinariaPrimeiroSegue(fpSegue, idParaJuncao, headerSegue.quantidadePessoas);
 
-            // 5. PROCESSAR RESULTADOS DO ARQUIVO SEGUE
+            // processando resultados do arquivo segue
             if (rrnInicial != -1) {
-                // Encontramos o primeiro. Vamos ler sequencialmente a partir dele
-                // até o ID mudar.
+                // após encontrar o primeiro, leremos a partir dele até o id mudar
                 long long byteOffsetAtual = TAMANHO_CABECALHO_SEGUE + (long long)rrnInicial * TAMANHO_REGISTRO_SEGUE;
                 fseek(fpSegue, byteOffsetAtual, SEEK_SET);
 
@@ -213,26 +208,25 @@ void func10() {
                     
                     lerRegistroSegue(fpSegue, &regSegue);
 
-                    // Se o ID ainda bate E o registro é válido ('1')
+                    // Se o ID ainda bate e o registro é válido ('1')
                     if (regSegue.idPessoaQueSegue == idParaJuncao) {
                         if (regSegue.removido == '0') { // '0' para não removido
                             imprimeSegue(regSegue);
                         }
                     } else {
-                        // O ID mudou, significa que já lemos todos
-                        // os registros 'segue' dessa pessoa.
-                        printf("\n"); //seguir a padronização do run codes
+                                            // se o ID mudou, todos os registros segue dessa pessoa foram lidos
+                        printf("\n");       //seguir a padronização do run codes (deu bastante problema kkkkkkk)
                         break; 
                     }
                 }
             }
-            // Se rrnInicial == -1, a pessoa não segue ninguém,
-            // então não imprimimos nada (só os dados da pessoa).
+            // Se rrnInicial == -1, a pessoa não segue ninguém, então não imprimimos nada
+            
         }
     } // Fim do loop for (de n buscas)
 
 
-    // --- FINALIZAÇÃO ---
+    // fim do programa
     free(offsetsEncontrados); // Libera o vetor de offsets
     fclose(fpPessoa);
     fclose(fpIndice);
