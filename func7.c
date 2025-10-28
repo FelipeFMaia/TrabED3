@@ -91,8 +91,6 @@ void func7 () {
     int numAdicionados = 0;
     int numRemovidos = 0;
 
-    // --- LOOP PRINCIPAL DE BUSCAS ---
-
     // Este loop vai rodar 'numAtualizacoes' vezes, uma para cada busca solicitada
     for(int i = 0; i < numAtualizacoes; i++) {
         int temp; // Variável temporária
@@ -186,17 +184,11 @@ void func7 () {
     headerPessoa.status = '1';
     atualizarConsistencia(fpPessoa, headerPessoa.status);
 
-    // fim do programa
-    // Liberar memória
     free(offsetsEncontrados);
     free(idsParaRemoverDoIndice);
     free(registrosParaAdicionarNoIndice);
-
-    // Após todas as buscas, fechamos os arquivos
     fclose(fpIndice);
     fclose(fpPessoa);
-
-    // usar binarioNaTela
     binarioNaTela(nameFilePessoa);
     binarioNaTela(nameFileIndice);
 
