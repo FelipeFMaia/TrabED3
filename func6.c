@@ -46,8 +46,7 @@ void lerNovoRegistro (RegistroPessoa *novoRegistro) {
 
 /**
  * Funcionalidade 6: Inserção de registros no arquivo de dados (pessoa.bin)
-    * Encontra o primeiro registro removido que caiba o novo registro e aplica a a inserção,
-preenchendo o restante do registro com $.
+    * A inserção é feita no final.
     * Reordenar o arquivo binario de índice após as inserções
     * 
  */
