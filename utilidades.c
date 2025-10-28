@@ -4,38 +4,6 @@
 #include <ctype.h>
 #include "utilidades.h"
 
-// // ----------------- Arquivo de Índice -----------------
-// typedef struct{
-//     char status;    // 1 byte      
-//     char lixo[11];  // 11 bytes
-// } CabecalhoIndice;  // 12 bytes 
-
-// typedef struct{
-//     int id;                 // 4 bytes
-//     long long byteOffSet;   // 8 bytes
-// } RegistroIndice;           // 12 bytes
-
-
-// // ----------------- Arquivo de Dados -----------------
-
-// typedef struct{
-//     char status;                // 1 byte 
-//     int qtdPessoas;             // 4 bytes
-//     int qtdRemovidos;           // 4 bytes
-//     long long proxByteOffSet;   // 8 bytes
-// } CabecalhoPessoa;              // 17 bytes
-
-// // Estrutura para os registros de dados em memória (pessoa.bin)
-// typedef struct {
-//     char removido;                          // 1 bytes
-//     int tamanhoRegistro;                    // 4 bytes
-//     int idPessoa;                           // 4 bytes
-//     int idadePessoa;                        // 4 bytes
-//     int tamanhoNomePessoa;                  // 4 bytes
-//     char nomePessoa[MAX_STRING_TAMANHO];    // MAX_STRING_TAMANHO bytes
-//     int tamanhoNomeUsuario;                 // 4 bytes
-//     char nomeUsuario[MAX_STRING_TAMANHO];   // MAX_STRING_TAMANHO bytes
-// } RegistroPessoa;
 
 void binarioNaTela(char *nomeArquivoBinario) { 
 
