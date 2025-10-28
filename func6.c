@@ -105,9 +105,6 @@ void func6 () {
     // Alocar um vetor para os novos registros de índice
     RegistroIndice *novosRegistros = (RegistroIndice*)malloc(sizeof(RegistroIndice) * numRegistrosNovos);
 
-
-    // loop principal
-
     // Este loop vai rodar numeroRegistroNovo vezes, uma para cada registro a ser inserido
     for(int i = 0; i < numRegistrosNovos; i++) {
         int temp; // Variável temporária
@@ -138,15 +135,10 @@ void func6 () {
     headerPessoa.status = '1';
     escreveCabecalhoPessoa(fpPessoa, headerPessoa);
 
-    // fim do programa
-    // liberar memória
+   
     free(novosRegistros);
-
-    // Após todas as buscas, fechamos os arquivos
     fclose(fpIndice);
     fclose(fpPessoa);
-
-    // usar binarioNaTela
     binarioNaTela(nameFilePessoa);
     binarioNaTela(nameFileIndice);
 }
